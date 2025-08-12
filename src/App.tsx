@@ -1,56 +1,88 @@
-import { useState } from "react";
-import "./App.css";
+import React, { useState } from "react";
+
+interface ApiResponse {
+  status?: string;
+  code?: number;
+  message?: string;
+  [key: string]: any;
+}
 
 async function postData(url = "", data = {}) {
   const response = await fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      // Add CSRF token here if your backend requires it
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
-  if (!response.ok) {
-    throw new Error("Network response was not ok");
+  let json: ApiResponse = {};
+  try {
+    json = await response.json();
+  } catch {
+    // No JSON response
   }
 
-  return response.json();
+  return { status: response.status, ...json };
 }
 
-function App() {
+const Login: React.FC = () => {
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const username = e.target.username.value;
-    const password = e.target.password.value;
+    const form = e.currentTarget;
+    const username = (form.elements.namedItem("username") as HTMLInputElement)
+      .value;
+    const password = (form.elements.namedItem("password") as HTMLInputElement)
+      .value;
 
     try {
-      const data = await postData( 
-        "https://agency-tmh2.onrender.com/api/login",
-        { username, password }
-      );
+      const data = await postData("http://127.0.0.1:8000/api/login", {
+        username,
+        password,
+      });
 
-      if (data.status === "success") {
-        setMessageColor("text-green-600");
-        setMessage(data.message);
-        // Redirect after successful login
-        window.location.href = "/dashboard";
-      } else {
-        setMessageColor("text-red-600");
-        setMessage(data.message || "Login failed");
+      switch (data.status) {
+        case 200:
+          setMessageColor("text-green-600");
+          setMessage(data.message || "Login successful");
+          // Redirect after successful login
+          window.location.href = "/dashboard";
+          break;
+
+        case 400:
+          setMessageColor("text-red-600");
+          setMessage(data.message || "Bad Request");
+          break;
+
+        case 401:
+          setMessageColor("text-red-600");
+          setMessage(data.message || "Unauthorized: Invalid credentials");
+          break;
+
+        case 404:
+          setMessageColor("text-red-600");
+          setMessage(data.message || "Not Found");
+          break;
+
+        case 500:
+          setMessageColor("text-red-600");
+          setMessage(data.message || "Server error, try again later");
+          break;
+
+        default:
+          setMessageColor("text-red-600");
+          setMessage(data.message || `Error: ${data.status}`);
+          break;
       }
     } catch (error: unknown) {
-  if (error instanceof Error) {
-    setMessage("Network error: " + error.message);
-  } else {
-    setMessage("Network error: Unknown error");
-  }
-  setMessageColor("text-red-600");
-}
-
+      if (error instanceof Error) {
+        setMessage("Network error: " + error.message);
+      } else {
+        setMessage("Network error: Unknown error");
+      }
+      setMessageColor("text-red-600");
+    }
   };
 
   return (
@@ -96,6 +128,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
-export default App;
+export default Login;
