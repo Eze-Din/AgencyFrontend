@@ -26,6 +26,7 @@ async function postData(url = "", data = {}) {
 
 const Login: React.FC = () => {
   const backendLoginUrl = process.env.REACT_APP_BACKEND_LOGIN_URL;
+  console.log("Backend URL:", backendLoginUrl);
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
 
@@ -38,13 +39,10 @@ const Login: React.FC = () => {
       .value;
 
     try {
-      const data = await postData(
-        backendLoginUrl,
-        {
-          username,
-          password,
-        }
-      );
+      const data = await postData(backendLoginUrl, {
+        username,
+        password,
+      });
 
       switch (data.status) {
         case 200:
