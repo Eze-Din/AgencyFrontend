@@ -25,6 +25,7 @@ async function postData(url = "", data = {}) {
 }
 
 const Login: React.FC = () => {
+  const backendLoginUrl = process.env.BACKEND_LOGIN_URL;
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
 
@@ -38,7 +39,7 @@ const Login: React.FC = () => {
 
     try {
       const data = await postData(
-        "https://agency-tmh2.onrender.com/api/login",
+        backendLoginUrl,
         {
           username,
           password,
