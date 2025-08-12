@@ -25,7 +25,7 @@ async function postData(url = "", data = {}) {
 }
 
 const Login: React.FC = () => {
-  const backendLoginUrl = process.env.BACKEND_LOGIN_URL;
+  const backendLoginUrl = process.env.REACT_APP_BACKEND_LOGIN_URL;
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
 
