@@ -22,13 +22,13 @@ function App() {
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
 
     try {
-      const data = await postData(
+      const data = await postData( 
         "https://agency-tmh2.onrender.com/api/login",
         { username, password }
       );
@@ -42,10 +42,15 @@ function App() {
         setMessageColor("text-red-600");
         setMessage(data.message || "Login failed");
       }
-    } catch (error) {
-      setMessageColor("text-red-600");
-      setMessage("Network error: " + error.message);
-    }
+    } catch (error: unknown) {
+  if (error instanceof Error) {
+    setMessage("Network error: " + error.message);
+  } else {
+    setMessage("Network error: Unknown error");
+  }
+  setMessageColor("text-red-600");
+}
+
   };
 
   return (
