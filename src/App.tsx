@@ -37,10 +37,13 @@ const Login: React.FC = () => {
       .value;
 
     try {
-      const data = await postData("http://127.0.0.1:8000/api/login", {
-        username,
-        password,
-      });
+      const data = await postData(
+        "https://agency-tmh2.onrender.com/api/login",
+        {
+          username,
+          password,
+        }
+      );
 
       switch (data.status) {
         case 200:
