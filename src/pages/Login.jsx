@@ -54,7 +54,7 @@ const Login: React.FC = () => {
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6">Welcome Back!</h1>
+        <h1 className="text-2xl font-bold text-center mb-6">Welcome Back Again!</h1>
 
         {message && (
           <div className={`text-center mb-4 ${messageColor}`}>{message}</div>
