@@ -23,7 +23,7 @@ export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const backendForgotUrl = import.meta.env.VITE_BACKEND_FORGOT_URL;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setSuccess('');

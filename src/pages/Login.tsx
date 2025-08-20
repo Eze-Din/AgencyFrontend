@@ -20,7 +20,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const backendLoginUrl = import.meta.env.VITE_BACKEND_LOGIN_URL;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError('');
