@@ -45,7 +45,7 @@ export default function Login() {
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded shadow-md w-full max-w-sm"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Log In</h2>
         {error && (
           <div className="mb-4 text-red-500 text-center">{error}</div>
         )}
