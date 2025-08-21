@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"; // Add this import
+import { Link, useNavigate } from "react-router-dom";
 
 // Simple postData helper for demonstration
 async function postData(url = '', data = {}) {
@@ -19,17 +19,16 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const backendLoginUrl = import.meta.env.VITE_BACKEND_LOGIN_URL;
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
-      // Replace '/api/login' with your actual login endpoint
       const result = await postData(backendLoginUrl, { username, password });
-      if (result.success) {
-        // Handle successful login (e.g., redirect or store token)
-        alert('Login successful!');
+      if (result.status === "success") {
+        navigate('/dashboard');
       } else {
         setError(result.message || 'Login failed');
       }

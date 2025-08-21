@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"; // Add this import
+import { Link, useNavigate } from "react-router-dom";
 
 // Simple postData helper for demonstration
 async function postData(url = '', data = {}) {
@@ -22,6 +22,7 @@ export default function ForgotPassword() {
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
   const backendForgotUrl = import.meta.env.VITE_BACKEND_FORGOT_URL;
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,12 +42,15 @@ export default function ForgotPassword() {
         new_password: newPassword,
         confirm_password: confirmPassword,
       });
-      if (result.success) {
+      if (result.status === "success") {
         setSuccess(result.message || "Password reset successful!");
         setUsername('');
         setForgotKey('');
         setNewPassword('');
         setConfirmPassword('');
+        setTimeout(() => {
+          navigate('/');
+        }, 1500);
       } else {
         setError(result.message || "Password reset failed.");
       }
