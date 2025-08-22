@@ -33,9 +33,11 @@ export default function DashboardLayout() {
         className={`
           fixed z-50 inset-y-0 left-0 w-64 bg-white shadow-lg flex flex-col transform
           transition-transform duration-200
+          overflow-y-auto
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0 lg:static lg:inset-0
         `}
+        style={{ maxHeight: '100vh' }} // Ensures sidebar doesn't overflow viewport
       >
         <div className="flex flex-col items-center py-8 border-b">
           <img
@@ -90,7 +92,7 @@ export default function DashboardLayout() {
         </svg>
       </button>
       {/* Main Content */}
-      <main className="flex-1 p-4 lg:p-10 ml-0 lg:ml-64 transition-all duration-200">
+      <main className="flex-1 p-4 lg:p-10 ml-0 lg:ml-64 transition-all duration-200 pt-16 lg:pt-0">
         <Outlet />
       </main>
     </div>
