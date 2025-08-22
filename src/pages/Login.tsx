@@ -29,6 +29,7 @@ export default function Login() {
       const result = await postData(backendLoginUrl, { username, password });
       if (result.status === "success") {
         navigate('/dashboard');
+        localStorage.setItem("loggedIn", "true");
       } else {
         setError(result.message || 'Login failed');
       }

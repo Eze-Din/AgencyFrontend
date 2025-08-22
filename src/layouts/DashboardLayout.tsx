@@ -74,6 +74,7 @@ export default function DashboardLayout() {
             onClick={() => {
               // TODO: Add logout logic
               navigate("/");
+              localStorage.removeItem("loggedIn");
               setSidebarOpen(false);
             }}
           >
