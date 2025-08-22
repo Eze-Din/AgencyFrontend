@@ -8,6 +8,7 @@ import CreateCv from './pages/CreateCv';
 import CvLists from './pages/CvLists';
 import SelectedCvs from './pages/SelectedCvs';
 import InactiveCvs from './pages/InactiveCvs';
+import RequireAuth from './components/RequireAuth';
 // Import other menu pages as you create them
 
 function App() {
@@ -15,7 +16,14 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/dashboard" element={<DashboardLayout />}>
+      <Route
+        path="/dashboard"
+        element={
+          <RequireAuth>
+            <DashboardLayout />
+          </RequireAuth>
+        }
+      >
         <Route index element={<Dashboard />} />
         <Route path="add-partner" element={<AddPartner />} />
         <Route path="create-cv" element={<CreateCv />} />

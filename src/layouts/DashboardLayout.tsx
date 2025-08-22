@@ -73,8 +73,8 @@ export default function DashboardLayout() {
             className="w-full bg-red-100 text-red-700 py-2 rounded hover:bg-red-200 transition"
             onClick={() => {
               // TODO: Add logout logic
-              navigate("/");
               localStorage.removeItem("loggedIn");
+              navigate("/");
               setSidebarOpen(false);
             }}
           >
