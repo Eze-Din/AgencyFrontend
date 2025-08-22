@@ -8,19 +8,25 @@ import CreateCv from './pages/CreateCv';
 import CvLists from './pages/CvLists';
 import SelectedCvs from './pages/SelectedCvs';
 import InactiveCvs from './pages/InactiveCvs';
+import PartnerDashboardLayout from './layouts/PartnerDashboardLayout';
+import PartnerDashboard from './pages/partners/PartnerDashboard';
+import PartnerSelectedCvs from './pages/partners/SelectedCvs';
 import RequireAuth from './components/RequireAuth';
-// Import other menu pages as you create them
+import RequireRole from './components/RequireRole';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      {/* Admin routes */}
       <Route
         path="/dashboard"
         element={
           <RequireAuth>
-            <DashboardLayout />
+            <RequireRole role="admin">
+              <DashboardLayout />
+            </RequireRole>
           </RequireAuth>
         }
       >
@@ -30,7 +36,21 @@ function App() {
         <Route path="cv-lists" element={<CvLists />} />
         <Route path="selected-cvs" element={<SelectedCvs />} />
         <Route path="inactive-cvs" element={<InactiveCvs />} />
-        {/* Add more menu routes here */}
+      </Route>
+      {/* Partner routes */}
+      <Route
+        path="/partner-dashboard"
+        element={
+          <RequireAuth>
+            <RequireRole role="user">
+              <PartnerDashboardLayout />
+            </RequireRole>
+          </RequireAuth>
+        }
+      >
+        <Route index element={<PartnerDashboard />} />
+        <Route path="cv-lists" element={<CvLists />} /> {/* Shared page */}
+        <Route path="selected-cvs" element={<PartnerSelectedCvs />} />
       </Route>
     </Routes>
   );
