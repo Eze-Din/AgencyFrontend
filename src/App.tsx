@@ -8,11 +8,7 @@ import CreateCv from './pages/CreateCv';
 import CvLists from './pages/CvLists';
 import SelectedCvs from './pages/SelectedCvs';
 import InactiveCvs from './pages/InactiveCvs';
-import PartnerDashboardLayout from './layouts/PartnerDashboardLayout';
-import PartnerDashboard from './pages/partners/PartnerDashboard';
-import PartnerSelectedCvs from './pages/partners/SelectedCvs';
 import RequireAuth from './components/RequireAuth';
-import RequireRole from './components/RequireRole';
 
 function App() {
   return (
@@ -24,9 +20,7 @@ function App() {
         path="/dashboard"
         element={
           <RequireAuth>
-            <RequireRole role="admin">
-              <DashboardLayout />
-            </RequireRole>
+            <DashboardLayout />
           </RequireAuth>
         }
       >
@@ -36,21 +30,6 @@ function App() {
         <Route path="cv-lists" element={<CvLists />} />
         <Route path="selected-cvs" element={<SelectedCvs />} />
         <Route path="inactive-cvs" element={<InactiveCvs />} />
-      </Route>
-      {/* Partner routes */}
-      <Route
-        path="/partner-dashboard"
-        element={
-          <RequireAuth>
-            <RequireRole role="user">
-              <PartnerDashboardLayout />
-            </RequireRole>
-          </RequireAuth>
-        }
-      >
-        <Route index element={<PartnerDashboard />} />
-        <Route path="cv-lists" element={<CvLists />} /> {/* Shared page */}
-        <Route path="selected-cvs" element={<PartnerSelectedCvs />} />
       </Route>
     </Routes>
   );
