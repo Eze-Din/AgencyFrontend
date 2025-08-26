@@ -1,22 +1,10 @@
 import { useState } from "react";
+import { api } from "../lib/api";
 
 const roles = [
   { label: "Admin", value: "admin" },
   { label: "User", value: "user" },
-  // Add more roles if needed
 ];
-
-// Replace with your actual backend endpoint
-const backendAddPartnerUrl = import.meta.env.VITE_BACKEND_ADD_PARTNER_URL;
-
-async function postData(url = '', data = {}) {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  });
-  return response.json();
-}
 
 export default function AddPartner() {
   const [form, setForm] = useState({
@@ -38,7 +26,6 @@ export default function AddPartner() {
     setError("");
     setSuccess("");
 
-    // Basic validation
     if (!form.username || !form.password || !form.role || !form.forgot_key) {
       setError("All fields are required.");
       return;
@@ -46,15 +33,17 @@ export default function AddPartner() {
 
     setLoading(true);
     try {
-      const result = await postData(backendAddPartnerUrl, form);
-      if (result.status === "success") {
-        setSuccess(result.message || "Partner added successfully!");
+      const res = await api.createUser(form);
+      const status = (res as any)?.status ?? 'success';
+      const message = (res as any)?.message;
+      if (status === 'success') {
+        setSuccess(message || "Partner added successfully!");
         setForm({ username: "", password: "", role: "user", forgot_key: "" });
       } else {
-        setError(result.message || "Failed to add partner.");
+        setError(message || "Failed to add partner.");
       }
-    } catch {
-      setError("An error occurred. Please try again.");
+    } catch (err: any) {
+      setError(err?.message || "An error occurred. Please try again.");
     }
     setLoading(false);
   };

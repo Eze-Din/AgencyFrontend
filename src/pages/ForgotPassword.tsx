@@ -1,17 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-// Simple postData helper for demonstration
-async function postData(url = '', data = {}) {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  return response.json();
-}
+import { api } from "../lib/api";
 
 export default function ForgotPassword() {
   const [username, setUsername] = useState('');
@@ -21,7 +10,6 @@ export default function ForgotPassword() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const backendForgotUrl = import.meta.env.VITE_BACKEND_FORGOT_URL;
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,26 +24,26 @@ export default function ForgotPassword() {
 
     setLoading(true);
     try {
-      const result = await postData(backendForgotUrl, {
+      const res = await api.forgotPassword({
         username,
         forgot_key: forgotKey,
         new_password: newPassword,
         confirm_password: confirmPassword,
       });
-      if (result.status === "success") {
-        setSuccess(result.message || "Password reset successful!");
+      const status = (res as any)?.status ?? 'success';
+      const message = (res as any)?.message;
+      if (status === 'success') {
+        setSuccess(message || "Password reset successful!");
         setUsername('');
         setForgotKey('');
         setNewPassword('');
         setConfirmPassword('');
-        setTimeout(() => {
-          navigate('/');
-        }, 1500);
+        setTimeout(() => navigate('/'), 1500);
       } else {
-        setError(result.message || "Password reset failed.");
+        setError(message || "Password reset failed.");
       }
-    } catch (err) {
-      setError("An error occurred. Please try again.");
+    } catch (err: any) {
+      setError(err?.message || "An error occurred. Please try again.");
     }
     setLoading(false);
   };

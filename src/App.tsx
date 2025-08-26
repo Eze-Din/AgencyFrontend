@@ -10,12 +10,16 @@ import SelectedCvs from './pages/SelectedCvs';
 import InactiveCvs from './pages/InactiveCvs';
 import RequireAuth from './components/RequireAuth';
 
+function NotFound() {
+  return <div className="p-8">Page not found</div>;
+}
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      {/* Admin routes */}
+      {/* Protected routes */}
       <Route
         path="/dashboard"
         element={
@@ -25,12 +29,35 @@ function App() {
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path="add-partner" element={<AddPartner />} />
-        <Route path="create-cv" element={<CreateCv />} />
+        {/* Owner-only */}
+        <Route
+          path="add-partner"
+          element={
+            <RequireAuth roles={["admin"]}>
+              <AddPartner />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="create-cv"
+          element={
+            <RequireAuth roles={["admin"]}>
+              <CreateCv />
+            </RequireAuth>
+          }
+        />
         <Route path="cv-lists" element={<CvLists />} />
         <Route path="selected-cvs" element={<SelectedCvs />} />
-        <Route path="inactive-cvs" element={<InactiveCvs />} />
+        <Route
+          path="inactive-cvs"
+          element={
+            <RequireAuth roles={["admin"]}>
+              <InactiveCvs />
+            </RequireAuth>
+          }
+        />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

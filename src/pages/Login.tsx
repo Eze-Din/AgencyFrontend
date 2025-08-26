@@ -1,24 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-// Simple postData helper for demonstration
-async function postData(url = '', data = {}) {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  return response.json();
-}
+import { api } from "../lib/api";
+import type { Auth, User } from "../types";
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const backendLoginUrl = import.meta.env.VITE_BACKEND_LOGIN_URL;
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,15 +15,28 @@ export default function Login() {
     setLoading(true);
     setError('');
     try {
-      const result = await postData(backendLoginUrl, { username, password });
-      if (result.status === "success") {
-        localStorage.setItem("loggedIn", "true");
+      const res = await api.login({ username, password });
+      // Be tolerant to multiple response shapes:
+      // - { data: { user, token } }
+      // - { user, token }
+      // - { username, role, id? } (data passthrough)
+      const body: any = res;
+      const user: User | undefined =
+        body?.user ??
+        body?.data?.user ??
+        ((body?.username && body?.role) ? { id: body?.id, username: body.username, role: body.role } : undefined);
+      const token: string | undefined = body?.token ?? body?.data?.token;
+      if (user && user.username && user.role) {
+        const auth: Auth = { user, token };
+        localStorage.setItem('auth', JSON.stringify(auth));
+        // For backward compatibility with existing guard
+        localStorage.setItem('loggedIn', 'true');
         navigate('/dashboard');
       } else {
-        setError(result.message || 'Login failed');
+        setError('Login failed');
       }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
+    } catch (err: any) {
+      setError(err?.message || 'An error occurred. Please try again.');
     }
     setLoading(false);
   };

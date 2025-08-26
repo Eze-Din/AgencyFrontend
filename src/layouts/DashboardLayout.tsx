@@ -1,25 +1,45 @@
-import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import type { Auth } from "../types";
 
-const user = {
-  name: "Test User",
-  username: "test",
-  role: "Admin",
-  avatar: "https://ui-avatars.com/api/?name=Test+User&background=0D8ABC&color=fff"
-};
-
-const menus = [
-  { label: "Dashboard", path: "/dashboard" },
-  { label: "Add Partner", path: "/dashboard/add-partner" },
-  { label: "Create Cv", path: "/dashboard/create-cv" },
-  { label: "Cv Lists", path: "/dashboard/cv-lists" },
-  { label: "Selected Cvs", path: "/dashboard/selected-cvs" },
-  { label: "Inactive Cvs", path: "/dashboard/inactive-cvs" },
-];
+function getAuth(): Auth | null {
+  const raw = localStorage.getItem("auth");
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as Auth;
+  } catch {
+    return null;
+  }
+}
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const auth = getAuth();
+
+  const user = useMemo(() => {
+    const u = auth?.user;
+    return {
+      name: u?.username ?? "Test User",
+      username: u?.username ?? "test",
+      role: (u?.role === 'admin' ? 'Owner' : 'Partner'),
+      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(u?.username ?? 'Test User')}&background=0D8ABC&color=fff`,
+    };
+  }, [auth]);
+
+  const menus = useMemo(() => {
+    const base = [
+      { label: "Dashboard", path: "/dashboard" },
+      { label: "Cv Lists", path: "/dashboard/cv-lists" },
+      { label: "Selected Cvs", path: "/dashboard/selected-cvs" },
+    ];
+    const ownerOnly = [
+      { label: "Add Partner", path: "/dashboard/add-partner" },
+      { label: "Create Cv", path: "/dashboard/create-cv" },
+      { label: "Inactive Cvs", path: "/dashboard/inactive-cvs" },
+    ];
+    return auth?.user?.role === 'admin' ? [...base, ...ownerOnly] : base;
+  }, [auth]);
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -37,7 +57,7 @@ export default function DashboardLayout() {
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0 lg:static lg:inset-0
         `}
-        style={{ maxHeight: '100vh' }} // Ensures sidebar doesn't overflow viewport
+        style={{ maxHeight: '100vh' }}
       >
         <div className="flex flex-col items-center py-8 border-b">
           <img
@@ -55,15 +75,15 @@ export default function DashboardLayout() {
           <ul>
             {menus.map((menu) => (
               <li key={menu.label}>
-                <button
-                  className="w-full text-left px-6 py-3 hover:bg-blue-50 hover:text-blue-700 font-medium transition"
-                  onClick={() => {
-                    navigate(menu.path);
-                    setSidebarOpen(false); // Close sidebar on mobile after navigation
-                  }}
+                <NavLink
+                  to={menu.path}
+                  className={({ isActive }) =>
+                    `block px-6 py-3 font-medium transition ${isActive ? 'bg-blue-600 text-white' : 'hover:bg-blue-50 hover:text-blue-700'}`
+                  }
+                  onClick={() => setSidebarOpen(false)}
                 >
                   {menu.label}
-                </button>
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -72,7 +92,7 @@ export default function DashboardLayout() {
           <button
             className="w-full bg-red-100 text-red-700 py-2 rounded hover:bg-red-200 transition"
             onClick={() => {
-              // TODO: Add logout logic
+              localStorage.removeItem("auth");
               localStorage.removeItem("loggedIn");
               navigate("/");
               setSidebarOpen(false);
