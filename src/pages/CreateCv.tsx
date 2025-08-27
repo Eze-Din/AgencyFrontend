@@ -153,7 +153,7 @@ export default function CreateCv() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const handleChange = <T extends object>(setter: (s: any) => void) => (
+  const handleChange = (setter: (s: any) => void) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type, checked } = e.target as HTMLInputElement;
