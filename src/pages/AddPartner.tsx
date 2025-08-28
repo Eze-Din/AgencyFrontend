@@ -3,7 +3,7 @@ import { api } from "../lib/api";
 
 const roles = [
   { label: "Admin", value: "admin" },
-  { label: "User", value: "user" },
+  { label: "Partner", value: "partner" },
 ];
 
 export default function AddPartner() {

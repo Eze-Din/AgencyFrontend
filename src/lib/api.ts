@@ -33,12 +33,20 @@ async function request<T = unknown>(path: string, options: RequestInit = {}): Pr
   const resp = await fetch(url, { ...options, headers });
 
   const text = await resp.text();
-  let json: any;
-  try {
-    json = text ? JSON.parse(text) : undefined;
-  } catch (e) {
-    // If server returns non-JSON, still provide raw text
-    json = { status: 'error', message: 'Invalid JSON response', raw: text };
+  const ct = resp.headers.get('content-type') || '';
+  let json: any = undefined;
+  if (ct.includes('application/json')) {
+    try {
+      json = text ? JSON.parse(text) : undefined;
+    } catch (e) {
+      if (!resp.ok) throw new ApiError('Invalid JSON response', resp.status, text);
+      // For OK responses with invalid JSON, return raw text
+      return text as unknown as T;
+    }
+  } else {
+    // Non-JSON response
+    if (!resp.ok) throw new ApiError(text || `HTTP ${resp.status}`, resp.status, text);
+    return text as unknown as T;
   }
 
   if (!resp.ok) {
@@ -62,10 +70,23 @@ export const api = {
     request('/users/create', { method: 'POST', body: JSON.stringify(payload) }),
   listUsers: (query?: Record<string, string | number | boolean>) =>
     request(`/users${toQuery(query)}`),
+  updateUser: (username: string, payload: { password?: string; role?: string; forgot_key?: string }) =>
+    request(`/users/update/${encodeURIComponent(username)}`, { method: 'PUT', body: JSON.stringify(payload) }),
+  deleteUser: (username: string) => request(`/users/delete/${encodeURIComponent(username)}`, { method: 'DELETE' }),
 
   // Applicants
   createApplicant: (payload: any) => request('/applicants/create', { method: 'POST', body: JSON.stringify(payload) }),
   listApplicants: (query?: Record<string, string | number | boolean>) => request(`/applicants${toQuery(query)}`),
+  updateApplicant: (identifier: string, payload: any) => request(`/applicants/update/${encodeURIComponent(identifier)}`, { method: 'PUT', body: JSON.stringify(payload) }),
+  deleteApplicant: (id: number | string) => request(`/applicants/delete/${id}`, { method: 'DELETE' }),
+  toggleActive: (id: number | string) => request(`/applicants/${id}/`, { method: 'POST' }),
+
+  // Selection
+  selectApplicant: (applicantId: number | string, userId: number | string) =>
+    request(`/selection/${applicantId}/`, { method: 'POST', body: JSON.stringify({ user_id: userId }) }),
+
+  // Partners
+  listPartners: () => request('/partners'),
 
   // Metrics
   totalApplicants: () => request('/total-applicants/'),

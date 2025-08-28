@@ -35,6 +35,7 @@ export default function DashboardLayout() {
     ];
     const ownerOnly = [
       { label: "Add Partner", path: "/dashboard/add-partner" },
+      { label: "Partner List", path: "/dashboard/partner-list" },
       { label: "Create Cv", path: "/dashboard/create-cv" },
       { label: "Inactive Cvs", path: "/dashboard/inactive-cvs" },
     ];
@@ -55,9 +56,8 @@ export default function DashboardLayout() {
           transition-transform duration-200
           overflow-y-auto
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 lg:static lg:inset-0
+          lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen
         `}
-        style={{ maxHeight: '100vh' }}
       >
         <div className="flex flex-col items-center py-8 border-b">
           <img

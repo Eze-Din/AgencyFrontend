@@ -9,6 +9,7 @@ import CvLists from './pages/CvLists';
 import SelectedCvs from './pages/SelectedCvs';
 import InactiveCvs from './pages/InactiveCvs';
 import RequireAuth from './components/RequireAuth';
+import PartnerList from './pages/PartnerList';
 
 function NotFound() {
   return <div className="p-8">Page not found</div>;
@@ -53,6 +54,14 @@ function App() {
           element={
             <RequireAuth roles={["admin"]}>
               <InactiveCvs />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="partner-list"
+          element={
+            <RequireAuth roles={["admin"]}>
+              <PartnerList />
             </RequireAuth>
           }
         />

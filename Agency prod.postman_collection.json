@@ -1,0 +1,527 @@
+{
+	"info": {
+		"_postman_id": "a0fabff4-39b7-46d8-aba9-f3bf8d6ebc0b",
+		"name": "Agency prod",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31101049"
+	},
+	"item": [
+		{
+			"name": "26-8 New Added APIs",
+			"item": [
+				{
+					"name": "total-applicants_count",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://agency-tmh2.onrender.com/api/total-applicants/",
+							"protocol": "https",
+							"host": [
+								"agency-tmh2",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"total-applicants",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "selected-applicants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://agency-tmh2.onrender.com/api/selected-applicants/",
+							"protocol": "https",
+							"host": [
+								"agency-tmh2",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"selected-applicants",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "selected-by-user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://agency-tmh2.onrender.com/api/selected-by-user/1",
+							"protocol": "https",
+							"host": [
+								"agency-tmh2",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"selected-by-user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "active-inactive-applicants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://agency-tmh2.onrender.com/api/active-inactive-applicants",
+							"protocol": "https",
+							"host": [
+								"agency-tmh2",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"active-inactive-applicants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "selection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 5 //partner id\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://agency-tmh2.onrender.com/api/selection/3/",
+							"protocol": "https",
+							"host": [
+								"agency-tmh2",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"selection",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "partners",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://agency-tmh2.onrender.com/api/partners",
+							"protocol": "https",
+							"host": [
+								"agency-tmh2",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"partners"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "active",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://agency-tmh2.onrender.com/api/applicants/3/",
+							"protocol": "https",
+							"host": [
+								"agency-tmh2",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"applicants",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"username\": \"test\",\r\n  \"password\": \"abcd\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/login",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgot password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"username\": \"test\",\r\n  \"forgot_key\": \"secret123\",\r\n  \"new_password\": \"abcd\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/forgot-password",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"forgot-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create Applicant",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"applicant\": {\r\n    \"application_no\": \"APP12345\",\r\n    \"date\": \"2025-08-28\",\r\n    \"full_name\": \"John Doe\",\r\n    \"passport_no\": \"P1234567\",\r\n    \"passport_type\": \"Regular\",\r\n    \"place_of_issue\": \"Addis Ababa\",\r\n    \"place_of_birth\": \"Addis Ababa\",\r\n    \"date_of_issue\": \"2020-01-01\",\r\n    \"date_of_expiry\": \"2030-01-01\",\r\n    \"date_of_birth\": \"1990-01-01\",\r\n    \"phone_no\": \"0912345678\",\r\n    \"religion\": \"Christian\",\r\n    \"gender\": \"Male\",\r\n    \"marital_status\": \"Single\",\r\n    \"occupation\": \"Engineer\",\r\n    \"qualification\": \"BSc\",\r\n    \"region\": \"Addis Ababa\",\r\n    \"city\": \"Addis Ababa\",\r\n    \"subcity_zone\": \"Bole\",\r\n    \"woreda\": \"01\",\r\n    \"house_no\": \"123\",\r\n    \"photo\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...\", \r\n    \"full_photo\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...\",\r\n    \"passport_photo\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...\"\r\n  },\r\n  \"sponsor_visa\": {\r\n    \"visa_no\": \"VISA123\",\r\n    \"sponsor_name\": \"Mr. Sponsor\",\r\n    \"sponsor_phone\": \"0911000000\",\r\n    \"sponsor_address\": \"Some address\",\r\n    \"sponsor_arabic\": \"Arabic Name\",\r\n    \"sponsor_id\": \"SP123\",\r\n    \"agent_no\": \"AG456\",\r\n    \"email\": \"sponsor@example.com\",\r\n    \"file_no\": \"FILE789\",\r\n    \"signed_on\": \"2025-08-01\",\r\n    \"biometric_id\": \"BIO123\",\r\n    \"contract_no\": \"CONTRACT456\",\r\n    \"sticker_visa_no\": \"STICK789\",\r\n    \"current_nationality\": \"Ethiopian\",\r\n    \"labor_id\": \"LAB123\",\r\n    \"visa_type\": \"Work\"\r\n  },\r\n  \"relative\": {\r\n    \"relative_name\": \"Jane Doe\",\r\n    \"relative_phone\": \"0911222333\",\r\n    \"relative_kinship\": \"Sister\",\r\n    \"relative_region\": \"Addis Ababa\",\r\n    \"city\": \"Addis Ababa\",\r\n    \"subcity_zone\": \"Bole\",\r\n    \"woreda\": \"01\",\r\n    \"house_no\": \"123\"\r\n  },\r\n  \"other_information\": {\r\n    \"contact_person\": \"Contact Person\",\r\n    \"contact_phone\": \"0911444555\",\r\n    \"ccc_center_name\": \"Center 1\",\r\n    \"certificate_no\": \"CERT123\",\r\n    \"certified_date\": \"2025-01-01\",\r\n    \"medical_place\": \"Some Hospital\",\r\n    \"trip_photographs\": true,\r\n    \"id_card\": true,\r\n    \"relative_id_card\": true\r\n  },\r\n  \"skills_experience\": {\r\n    \"english\": \"Fluent\",\r\n    \"arabic\": \"Basic\",\r\n    \"experience_abroad\": true,\r\n    \"works_in\": \"Abroad\",\r\n    \"salary\": 1000,\r\n    \"height\": 170,\r\n    \"weight\": 70,\r\n    \"reference_no\": \"REF123\",\r\n    \"no_of_children\": 0,\r\n    \"remarks\": \"None\",\r\n    \"ironing\": true,\r\n    \"sewing\": false,\r\n    \"baby_sitting\": true,\r\n    \"old_care\": false,\r\n    \"all_cooking\": true,\r\n    \"cleaning\": true,\r\n    \"washing\": true,\r\n    \"cooking\": true\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/applicants/create",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"applicants",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {  \"username\": \"admin\",\r\n            \"password\": \"admin123\",\r\n            \"role\": \"admin\",\r\n            \"forgot_key\": \"admin123\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/users/create",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get All Applicant",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/applicants",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"applicants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get One Applicant",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        passport_no \r\n        gender\r\n        religion \r\n        full_name\r\n        application_no   ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/applicants?application_no=APP1234",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"applicants"
+					],
+					"query": [
+						{
+							"key": "gender",
+							"value": "Male",
+							"disabled": true
+						},
+						{
+							"key": "application_no",
+							"value": "APP1234"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/users",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by Role",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/users?role=admin",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "role",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Applicant",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"applicant\": {\r\n    \"application_no\": \"APP1237\",\r\n    \"date\": \"2025-08-28\",\r\n    \"full_name\": \"John Doe\",\r\n    \"passport_no\": \"P1234567\",\r\n    \"passport_type\": \"Regular\",\r\n    \"place_of_issue\": \"Addis Ababa\",\r\n    \"place_of_birth\": \"Addis Ababa\",\r\n    \"date_of_issue\": \"2020-01-01\",\r\n    \"date_of_expiry\": \"2030-01-01\",\r\n    \"date_of_birth\": \"1990-01-01\",\r\n    \"phone_no\": \"0912345678\",\r\n    \"religion\": \"Christian\",\r\n    \"gender\": \"Male\",\r\n    \"marital_status\": \"Single\",\r\n    \"occupation\": \"Engineer\",\r\n    \"qualification\": \"BSc\",\r\n    \"region\": \"Addis Ababa\",\r\n    \"city\": \"Addis Ababa\",\r\n    \"subcity_zone\": \"Bole\",\r\n    \"woreda\": \"01\",\r\n    \"house_no\": \"123\",\r\n    \"photo\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...\", \r\n    \"full_photo\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...\",\r\n    \"passport_photo\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...\"\r\n  },\r\n  \"sponsor_visa\": {\r\n    \"visa_no\": \"VISA123\",\r\n    \"sponsor_name\": \"Mr. Sponsor\",\r\n    \"sponsor_phone\": \"0911000000\",\r\n    \"sponsor_address\": \"Some address\",\r\n    \"sponsor_arabic\": \"Arabic Name\",\r\n    \"sponsor_id\": \"SP123\",\r\n    \"agent_no\": \"AG456\",\r\n    \"email\": \"sponsor@example.com\",\r\n    \"file_no\": \"FILE789\",\r\n    \"signed_on\": \"2025-08-01\",\r\n    \"biometric_id\": \"BIO123\",\r\n    \"contract_no\": \"CONTRACT456\",\r\n    \"sticker_visa_no\": \"STICK789\",\r\n    \"current_nationality\": \"Ethiopian\",\r\n    \"labor_id\": \"LAB123\",\r\n    \"visa_type\": \"Work\"\r\n  },\r\n  \"relative\": {\r\n    \"relative_name\": \"Jane Doe\",\r\n    \"relative_phone\": \"0911222333\",\r\n    \"relative_kinship\": \"Sister\",\r\n    \"relative_region\": \"Addis Ababa\",\r\n    \"city\": \"Addis Ababa\",\r\n    \"subcity_zone\": \"Bole\",\r\n    \"woreda\": \"01\",\r\n    \"house_no\": \"123\"\r\n  },\r\n  \"other_information\": {\r\n    \"contact_person\": \"Contact Person\",\r\n    \"contact_phone\": \"0911444555\",\r\n    \"ccc_center_name\": \"Center 1\",\r\n    \"certificate_no\": \"CERT123\",\r\n    \"certified_date\": \"2025-01-01\",\r\n    \"medical_place\": \"Some Hospital\",\r\n    \"trip_photographs\": true,\r\n    \"id_card\": true,\r\n    \"relative_id_card\": true\r\n  },\r\n  \"skills_experience\": {\r\n    \"english\": \"Fluent\",\r\n    \"arabic\": \"Basic\",\r\n    \"experience_abroad\": true,\r\n    \"works_in\": \"Abroad\",\r\n    \"salary\": 1000,\r\n    \"height\": 170,\r\n    \"weight\": 70,\r\n    \"reference_no\": \"REF123\",\r\n    \"no_of_children\": 0,\r\n    \"remarks\": \"None\",\r\n    \"ironing\": true,\r\n    \"sewing\": false,\r\n    \"baby_sitting\": true,\r\n    \"old_care\": false,\r\n    \"all_cooking\": true,\r\n    \"cleaning\": true,\r\n    \"washing\": true,\r\n    \"cooking\": true\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/applicants/update/P123456780",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"applicants",
+						"update",
+						"P123456780"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \r\n            \"password\": \"Test@123\",\r\n            \"role\": \"admin\",\r\n            \"forgot_key\": \"test@123\"\r\n        }\r\n        ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/users/update/test",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users",
+						"update",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/users/delete/dd",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"users",
+						"delete",
+						"dd"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Applicant",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "https://agency-tmh2.onrender.com/api/applicants/delete/27",
+					"protocol": "https",
+					"host": [
+						"agency-tmh2",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"applicants",
+						"delete",
+						"27"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
