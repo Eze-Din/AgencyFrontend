@@ -8,6 +8,25 @@ function getAuth(): Auth | null {
   try { return JSON.parse(raw) as Auth; } catch { return null; }
 }
 
+function computeAgeFromDOB(a: any): string {
+  const dob = (a as any)?.date_of_birth ?? (a as any)?.dob;
+  if (!dob) return '-';
+  const d = new Date(dob);
+  if (Number.isNaN(d.getTime())) return '-';
+  const now = new Date();
+  let age = now.getFullYear() - d.getFullYear();
+  const m = now.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < d.getDate())) age--;
+  return age >= 0 ? String(age) : '-';
+}
+
+function getExperience(a: any): string {
+  if (typeof (a as any)?.experience === 'string' && (a as any).experience.trim()) return (a as any).experience;
+  const se = (a as any)?.skills_experience;
+  if (se && typeof se.experience_abroad === 'boolean') return se.experience_abroad ? 'Abroad' : 'None';
+  return '-';
+}
+
 export default function SelectedCvs() {
   const auth = getAuth();
   const isOwner = auth?.user?.role === 'admin';

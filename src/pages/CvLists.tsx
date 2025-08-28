@@ -310,15 +310,4 @@ async function handleDelete(a: any) {
   }
 }
 
-async function handleSelect(a: any) {
-  try {
-    const auth = getAuth();
-    const userId = auth?.user?.id;
-    const applicantId = (a as any).id ?? (a as any).applicant_id ?? (a as any).pk;
-    if (userId == null || applicantId == null) throw new Error('Missing user/applicant id');
-    await api.selectApplicant(applicantId, userId);
-    alert('Selected successfully');
-  } catch (e: any) {
-    alert(e?.message || 'Failed to select');
-  }
-}
+// removed unused handleSelect

@@ -107,7 +107,6 @@ import { useLocation } from 'react-router-dom';
 export default function CreateCv() {
   const location = useLocation() as any;
   const prefill = (location?.state && (location.state.applicant || location.state)) || null;
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL as string;
 
   const [applicant, setApplicant] = useState<Applicant>({
     application_no: '',
